@@ -6,27 +6,30 @@ fn abs_internal(i: i32) -> i32 {
     i.abs()
 }
 
-extern fn abs(i: libc::c_int) -> libc::c_int {
+#[no_mangle]
+pub extern fn abs(i: libc::c_int) -> libc::c_int {
     abs_internal(i)
 }
 
-fn max_internal(slice: &[u8]) -> u8 {
+fn max_internal(slice: &[i32]) -> i32 {
     slice.iter().max().cloned().unwrap_or(0)
 }
 
-extern fn max(slice: *const u8, count: libc::size_t) -> libc::c_int {
+#[no_mangle]
+pub extern fn max(slice: *const libc::c_int, count: libc::size_t) -> libc::c_int {
     let slice = unsafe {
         slice::from_raw_parts(slice, count)
     };
 
-    max_internal(slice) as libc::c_int
+    max_internal(slice)
 }
 
 fn create_vec_internal() -> Vec<u8> {
     vec![1, 2, 3]
 }
 
-extern fn create_vec() -> *const u8 {
+#[no_mangle]
+pub extern fn create_vec() -> *const u8 {
     let mut vec = create_vec_internal();
 
     vec.shrink_to_fit();
@@ -37,11 +40,13 @@ extern fn create_vec() -> *const u8 {
     ptr
 }
 
-extern fn use_callback(callback: extern fn(libc::c_int) -> libc::c_int, value: libc::c_int) -> libc::c_int {
+#[no_mangle]
+pub extern fn use_callback(callback: extern fn(libc::c_int) -> libc::c_int, value: libc::c_int) -> libc::c_int {
     callback(value)
 }
 
-extern fn return_callback() -> extern fn(libc::c_int) -> libc::c_int {
+#[no_mangle]
+pub extern fn return_callback() -> extern fn(libc::c_int) -> libc::c_int {
     abs
 }
 

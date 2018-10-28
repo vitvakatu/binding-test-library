@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Ilya Bogdanov <ilya.bogdanov@xdev.re>"]
 
 [lib]
-crate-type = ["rlib", "cdylib"]
+crate-type = ["cdylib"]
 
 [dependencies]
 libc = "0.2.43"

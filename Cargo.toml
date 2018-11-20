@@ -7,4 +7,12 @@ authors = ["Ilya Bogdanov <ilya.bogdanov@xdev.re>"]
 crate-type = ["cdylib"]
 
 [dependencies]
+log = "0.4"
 libc = "0.2.43"
+
+[build-dependencies]
+rust_swig = "0.1.5"
+syntex = "0.58.1"
+env_logger = "0.5"
+bindgen = "0.37.4"
+log = "0.4"
